@@ -1,6 +1,4 @@
-FROM tx-r-immunespace
-
-# RUN apt-get install -y emacs
+FROM txscience/tx-r-immunespace:0.1
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
