@@ -1,4 +1,4 @@
-FROM txscience/tx-r-immunespace:0.1
+FROM txscience/tx-r-immunespace:1.0
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
