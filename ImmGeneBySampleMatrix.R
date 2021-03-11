@@ -74,13 +74,33 @@ eset=con$getParticipantGEMatrix(group=immcellfie_group$group_id)
 
 # one matrix per cohort discovered and then combined
 # No cross-cohort or cross-study normalization is done
+
+# this is an array? class MIAME?
+experimentData <- Biobase::experimentData(eset)
+# phenotype label descriptions, if they exist
+phenoMetadata <- Biobase::varMetadata(eset)
+# phenotypic data 
+phenoDataMatrix <- Biobase::pData(eset)
+# featurenames
+featureNames <- Biobase::featureNames(eset)
+# expression counts/intensities
 geneBySampleMatrix <- Biobase::exprs(eset)
 
 library(readr)
 # Genes are standardized across studies using HUGO symbols
 # BiosampleIds are standardized and deidentified via ImmPort
 if (is.null(outputDir)){
+  cat("===\n")  
+  print(experimentData)
+  cat("===\n")  
+  print(phenoMetadata)
+  cat("===\n")  
+  cat(format_csv(as.data.frame(phenoDataMatrix)))
+  cat("===\n")  
+  cat(format_csv(as.data.frame(featureNames)))
+  cat("===\n")  
   cat(format_csv(as.data.frame(geneBySampleMatrix)))
 } else {
-  write.csv(geneBySampleMatrix, file = outputPath)
+  #  write.csv(geneBySampleMatrix, file = outputPath)
+  write.csv(phenoDataMatrix, file = outputPath)
 }
