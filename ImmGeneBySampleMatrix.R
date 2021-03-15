@@ -12,22 +12,25 @@
 #   2. Use the filters to select one or more studies with at least one expression matrices
 #   3. Save as <participantGroupName>
 #   4. Run this program
-
+#
+# To shortcut the immunespace server and just return test data, use the --test flag.
 # ---- Parse args ===
 library(optparse)
 option_list = list(
     make_option(c("-o", "--output_dir"), type="character", default=NULL,
-              help="container (transient) output directory, omit for stdout", metavar="character"),
+              help="container (transient) output directory, omit for stdout  [default= %default]", metavar="character"),
     make_option(c("-g", "--group"), type="character", default="cellfie_group2", 
               help="user-defined participant groupname created on Immunespace [default= %default]", metavar="character"),
     make_option(c("-a", "--api_key"), type="character", default=NULL,
-              help="base url of the Immport website to use", metavar="character"),
+              help="base url of the Immport website to use [default= %default]", metavar="character"),
     make_option(c("-b", "--base_URL"), type="character", default="www.immunespace.org",
-              help="base url of the Immport website to use", metavar="character"),
+              help="base url of the Immport website to use [default= %default]", metavar="character"),
     make_option(c("-u", "--username"), type="character", default="txscience@lists.renci.org",
               help="Immunespace username (email) [default= %default]", metavar="character"),
     make_option(c("-p", "--passwd"), type="character", default=NULL,
-              help="Immunespace password", metavar="character")
+              help="Immunespace password", metavar="character"),
+    make_option(c("-t", "--test"), action="store_true", default=FALSE,
+              help="Return test data instead of hitting server [default %default]", metavar="character")
 ); 
 opt_parser = OptionParser(option_list=option_list);
 opt = parse_args(opt_parser);
@@ -42,7 +45,14 @@ passWord <- opt$passwd
 userName <- opt$user
 immBaseURL <- opt$base_URL
 apiKey <- opt$api_key
+testFlag <- opt$test
 # ---- Initialization ---
+library(readr)
+if(testFlag == TRUE){
+    cat(format_csv2(as.data.frame(readLines("./test.csv")), quote_escape = FALSE))
+    quit(save="no")
+}
+
 outputFilename <- participantGroupName
 if (is.null(outputDir)){
    outputPath <- ""
@@ -86,7 +96,6 @@ featureNames <- Biobase::featureNames(eset)
 # expression counts/intensities
 geneBySampleMatrix <- Biobase::exprs(eset)
 
-library(readr)
 # Genes are standardized across studies using HUGO symbols
 # BiosampleIds are standardized and deidentified via ImmPort
 if (is.null(outputDir)){
