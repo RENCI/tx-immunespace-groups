@@ -1,3 +1,4 @@
+[![AppVeyor](https://img.shields.io/docker/cloud/build/txscience/tx-immunespace-groups?style=plastic)](https://hub.docker.com/repository/docker/txscience/tx-immunespace-groups/builds)
 # tx-immunespace-groups
 container gets gene counts matrix from immmunespace
 
