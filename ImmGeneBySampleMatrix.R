@@ -99,17 +99,47 @@ geneBySampleMatrix <- Biobase::exprs(eset)
 # Genes are standardized across studies using HUGO symbols
 # BiosampleIds are standardized and deidentified via ImmPort
 if (is.null(outputDir)){
-  cat("===\n")  
+  cat("===\n")
   print(experimentData)
-  cat("===\n")  
+  cat("===\n")
   print(phenoMetadata)
-  cat("===\n")  
+  cat("===\n")
   cat(format_csv(as.data.frame(phenoDataMatrix)))
-  cat("===\n")  
+  cat("===\n")
   cat(format_csv(as.data.frame(featureNames)))
-  cat("===\n")  
+  cat("===\n")
   cat(format_csv(as.data.frame(geneBySampleMatrix)))
 } else {
-  #  write.csv(geneBySampleMatrix, file = outputPath)
-  write.csv(phenoDataMatrix, file = outputPath)
+#   punting on serializing experimentData & phenoMetadata
+
+#   experimentDataPath <- paste0(outputDir, "/", "experimentData.txt")
+#   print(paste0("writing experimentDataFile: ", experimentDataPath))
+#   experimentDataFile <- file(experimentDataPath, "w+")
+#   writeLines(experimentData, experimentDataFile)
+#   cat(experimentData, file = experimentDataFile)
+#   close(experimentDataFile)
+
+#   phenoMetadataPath <- paste0(outputDir, "/", "phenoMetadata.txt")
+#   print(paste0("writing phenoMetadataFile: ", phenoMetadataPath))
+#   phenoMetadataFile <- file(phenoMetadataPath, "w")
+#   cat(phenoMetadata, file = phenoMetadataFile)
+
+  phenoDataMatrixPath <- paste0(outputDir, "/", "phenoDataMatrix.csv")
+  print(paste0("writing phenoDataMatrixFile: ", phenoDataMatrixPath))
+  phenoDataMatrixFile <- file(phenoDataMatrixPath, "w")
+  write.csv(phenoDataMatrix, file = phenoDataMatrixFile)
+  close(phenoDataMatrixFile)
+
+  featureNamesPath <- paste0(outputDir, "/", "featureNames.csv")
+  print(paste0("writing featureNamesFile: ", featureNamesPath))
+  featureNamesFile <- file(featureNamesPath, "w")
+  write.csv(featureNames, file = featureNamesFile)
+  close(featureNamesFile)
+
+  geneBySampleMatrixPath <- paste0(outputDir, "/", "geneBySampleMatrix.csv")
+  print(paste0("writing geneBySampleMatrixFile: ", geneBySampleMatrixPath))
+  geneBySampleMatrixFile <- file(geneBySampleMatrixPath, "w")
+  write.csv(geneBySampleMatrix, file = geneBySampleMatrixFile)
+  close(geneBySampleMatrixFile)
+
 }
