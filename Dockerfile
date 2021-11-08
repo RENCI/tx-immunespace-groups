@@ -7,3 +7,4 @@ COPY ImmGeneBySampleMatrix.R ImmGeneBySampleMatrix.R
 COPY test.csv test.csv
 
 CMD ["/bin/bash"]
+ENTRYPOINT [ "/usr/src/app/ImmGeneBySampleMatrix.R" ]
