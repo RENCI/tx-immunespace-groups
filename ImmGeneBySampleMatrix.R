@@ -1,4 +1,4 @@
-#!/usr/local/bin/Rscript
+#!/usr/bin/Rscript
 #
 # usage: ImmGeneBySampleMatrix.R -g <participantGroupName> -o <output_dir> [-u <immunespace-base-url> ] < -a <immunespace-apikey> | -u <immunespace-email> -p <immunospace-password> >
 #
@@ -23,7 +23,7 @@ option_list = list(
               help="user-defined participant groupname created on Immunespace [default= %default]", metavar="character"),
     make_option(c("-a", "--api_key"), type="character", default=NULL,
               help="base url of the Immport website to use [default= %default]", metavar="character"),
-    make_option(c("-b", "--base_URL"), type="character", default="www.immunespace.org",
+    make_option(c("-b", "--base_URL"), type="character", default="datatools.immunespace.org",
               help="base url of the Immport website to use [default= %default]", metavar="character"),
     make_option(c("-u", "--username"), type="character", default="txscience@lists.renci.org",
               help="Immunespace username (email) [default= %default]", metavar="character"),
@@ -71,6 +71,7 @@ if (is.null(apiKey)){
 
 # ---- Main ---
 library(ImmuneSpaceR)
+# packageVersion("ImmuneSpaceR")
 if (immBaseURL == "test.immunespace.org"){
   con <- CreateConnection("", onTest = TRUE)
 } else {
